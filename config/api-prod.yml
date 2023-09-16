@@ -1,0 +1,4 @@
+port: 8080
+portInternal: 8080
+external:
+  authAPI: ${AUTH_API}

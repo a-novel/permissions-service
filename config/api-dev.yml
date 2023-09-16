@@ -1,0 +1,4 @@
+port: 2043
+portInternal: 20043
+external:
+  authAPI: http://localhost:20040
