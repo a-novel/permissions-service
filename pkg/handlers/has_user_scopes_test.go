@@ -1,9 +1,9 @@
 package handlers_test
 
 import (
-	"github.com/a-novel/authorizations-service/pkg/handlers"
-	servicesmocks "github.com/a-novel/authorizations-service/pkg/services/mocks"
 	goframework "github.com/a-novel/go-framework"
+	"github.com/a-novel/permissions-service/pkg/handlers"
+	servicesmocks "github.com/a-novel/permissions-service/pkg/services/mocks"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/require"

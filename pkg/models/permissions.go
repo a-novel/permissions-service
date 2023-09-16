@@ -1,6 +1,6 @@
 package models
 
-import "github.com/a-novel/authorizations-service/pkg/dao"
+import "github.com/a-novel/permissions-service/pkg/dao"
 
 const (
 	FieldValidatedAccount = dao.FieldValidatedAccount

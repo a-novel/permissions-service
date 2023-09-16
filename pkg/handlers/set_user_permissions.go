@@ -1,31 +1,31 @@
 package handlers
 
 import (
-	"github.com/a-novel/authorizations-service/pkg/models"
-	"github.com/a-novel/authorizations-service/pkg/services"
 	"github.com/a-novel/go-apis"
 	goframework "github.com/a-novel/go-framework"
+	"github.com/a-novel/permissions-service/pkg/models"
+	"github.com/a-novel/permissions-service/pkg/services"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"time"
 )
 
-type SetUserAuthorizationsHandler interface {
+type SetUserPermissionsHandler interface {
 	Handle(c *gin.Context)
 }
 
-func NewSetUserAuthorizationsHandler(service services.SetUserAuthorizationService) SetUserAuthorizationsHandler {
-	return &setUserAuthorizationsHandlerImpl{
+func NewSetUserPermissionsHandler(service services.SetUserPermissionsService) SetUserPermissionsHandler {
+	return &setUserPermissionsHandlerImpl{
 		service: service,
 	}
 }
 
-type setUserAuthorizationsHandlerImpl struct {
-	service services.SetUserAuthorizationService
+type setUserPermissionsHandlerImpl struct {
+	service services.SetUserPermissionsService
 }
 
-func (h *setUserAuthorizationsHandlerImpl) Handle(c *gin.Context) {
-	form := new(models.SetUserAuthorizationsForm)
+func (h *setUserPermissionsHandlerImpl) Handle(c *gin.Context) {
+	form := new(models.SetUserPermissionsForm)
 	if err := c.BindJSON(form); err != nil {
 		_ = c.AbortWithError(http.StatusBadRequest, err)
 		return

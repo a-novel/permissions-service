@@ -1,8 +1,8 @@
 package handlers
 
 import (
-	"github.com/a-novel/authorizations-service/pkg/models"
-	"github.com/a-novel/authorizations-service/pkg/services"
+	"github.com/a-novel/permissions-service/pkg/models"
+	"github.com/a-novel/permissions-service/pkg/services"
 	"github.com/gin-gonic/gin"
 	"github.com/samber/lo"
 	"net/http"

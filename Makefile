@@ -1,7 +1,7 @@
 COVER_FILE=$(CURDIR)/coverage.out
 BIN_DIR=$(CURDIR)/bin
 
-PKG="github.com/a-novel/authorizations-service"
+PKG="github.com/a-novel/permissions-service"
 
 PKG_LIST=$(shell go list $(PKG)/... | grep -v /vendor/)
 
@@ -26,11 +26,11 @@ db-setup:
 
 # Plugs into the development database.
 db:
-	psql -h localhost -p 5432 -U users agora_authorizations
+	psql -h localhost -p 5432 -U users agora_permissions
 
 # Plugs into the test database.
 db-test:
-	psql -h localhost -p 5432 -U test agora_authorizations_test
+	psql -h localhost -p 5432 -U test agora_permissions_test
 
 run:
 	go run ./cmd/api/main.go

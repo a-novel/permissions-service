@@ -2,18 +2,18 @@ package services_test
 
 import (
 	"context"
-	"github.com/a-novel/authorizations-service/pkg/dao"
-	daomocks "github.com/a-novel/authorizations-service/pkg/dao/mocks"
-	"github.com/a-novel/authorizations-service/pkg/models"
-	"github.com/a-novel/authorizations-service/pkg/services"
 	goframework "github.com/a-novel/go-framework"
+	"github.com/a-novel/permissions-service/pkg/dao"
+	daomocks "github.com/a-novel/permissions-service/pkg/dao/mocks"
+	"github.com/a-novel/permissions-service/pkg/models"
+	"github.com/a-novel/permissions-service/pkg/services"
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/require"
 	"testing"
 	"time"
 )
 
-func TestSetUserAuthorizationService(t *testing.T) {
+func TestSetUserPermissionsService(t *testing.T) {
 	data := []struct {
 		name string
 
@@ -23,8 +23,8 @@ func TestSetUserAuthorizationService(t *testing.T) {
 		now         time.Time
 
 		shouldCallDAO           bool
-		shouldCallDAOWithCore   dao.UserAuthorizationsCore
-		shouldCallDAOWithFields dao.AuthorizationFields
+		shouldCallDAOWithCore   dao.UserPermissionsCore
+		shouldCallDAOWithFields dao.PermissionsFields
 		daoErr                  error
 
 		expectErr error
@@ -40,10 +40,10 @@ func TestSetUserAuthorizationService(t *testing.T) {
 			},
 			now:           baseTime,
 			shouldCallDAO: true,
-			shouldCallDAOWithCore: dao.UserAuthorizationsCore{
+			shouldCallDAOWithCore: dao.UserPermissionsCore{
 				ValidatedAccount: true,
 			},
-			shouldCallDAOWithFields: dao.AuthorizationFields{
+			shouldCallDAOWithFields: dao.PermissionsFields{
 				dao.FieldValidatedAccount,
 				dao.FieldAdminAccess,
 			},
@@ -90,10 +90,10 @@ func TestSetUserAuthorizationService(t *testing.T) {
 			},
 			now:           baseTime,
 			shouldCallDAO: true,
-			shouldCallDAOWithCore: dao.UserAuthorizationsCore{
+			shouldCallDAOWithCore: dao.UserPermissionsCore{
 				ValidatedAccount: true,
 			},
-			shouldCallDAOWithFields: dao.AuthorizationFields{
+			shouldCallDAOWithFields: dao.PermissionsFields{
 				dao.FieldValidatedAccount,
 				dao.FieldAdminAccess,
 			},
@@ -104,7 +104,7 @@ func TestSetUserAuthorizationService(t *testing.T) {
 
 	for _, d := range data {
 		t.Run(d.name, func(t *testing.T) {
-			repository := daomocks.NewUserAuthorizationsRepository(t)
+			repository := daomocks.NewUserPermissionsRepository(t)
 
 			if d.shouldCallDAO {
 				repository.
@@ -112,7 +112,7 @@ func TestSetUserAuthorizationService(t *testing.T) {
 					Return(nil, d.daoErr)
 			}
 
-			service := services.NewSetUserAuthorizationService(repository)
+			service := services.NewSetUserPermissionsService(repository)
 			err := service.Set(context.Background(), d.userID, d.setFields, d.unsetFields, d.now)
 
 			require.ErrorIs(t, err, d.expectErr)

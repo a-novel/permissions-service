@@ -1,8 +1,8 @@
 package adapters
 
 import (
-	"github.com/a-novel/authorizations-service/pkg/dao"
-	"github.com/a-novel/authorizations-service/pkg/models"
+	"github.com/a-novel/permissions-service/pkg/dao"
+	"github.com/a-novel/permissions-service/pkg/models"
 	"github.com/samber/lo"
 )
 
@@ -17,13 +17,13 @@ var (
 		models.CanUseOpenAIPlayground,
 	}
 
-	AuthorizationsFields = dao.AuthorizationFields{
+	PermissionsFields = dao.PermissionsFields{
 		dao.FieldValidatedAccount,
 		dao.FieldAdminAccess,
 	}
 )
 
-func UserAuthorizationsModelToScopes(src *dao.UserAuthorizations) models.Scopes {
+func UserPermissionsModelToScopes(src *dao.UserPermissions) models.Scopes {
 	scopes := models.Scopes{}
 	scopes = append(scopes, DefaultScopes...)
 
@@ -37,13 +37,13 @@ func UserAuthorizationsModelToScopes(src *dao.UserAuthorizations) models.Scopes 
 	return scopes
 }
 
-func AuthorizationsFieldsToDAO(src []string) (dao.AuthorizationFields, error) {
-	var output dao.AuthorizationFields
+func PermissionsFieldsToDAO(src []string) (dao.PermissionsFields, error) {
+	var output dao.PermissionsFields
 
 	for _, item := range src {
-		toField := dao.AuthorizationField(item)
-		if !lo.Contains(AuthorizationsFields, toField) {
-			return nil, ErrInvalidAuthorizationField
+		toField := dao.PermissionField(item)
+		if !lo.Contains(PermissionsFields, toField) {
+			return nil, ErrInvalidPermissionField
 		}
 
 		output = append(output, toField)

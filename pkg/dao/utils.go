@@ -1,10 +1,10 @@
 package dao
 
-type AuthorizationField string
+type PermissionField string
 
-type AuthorizationFields []AuthorizationField
+type PermissionsFields []PermissionField
 
 const (
-	FieldValidatedAccount AuthorizationField = "validated_account"
-	FieldAdminAccess      AuthorizationField = "admin_access"
+	FieldValidatedAccount PermissionField = "validated_account"
+	FieldAdminAccess      PermissionField = "admin_access"
 )

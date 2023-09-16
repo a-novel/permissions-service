@@ -2,10 +2,10 @@ package dao_test
 
 import (
 	"context"
-	"github.com/a-novel/authorizations-service/migrations"
-	"github.com/a-novel/authorizations-service/pkg/dao"
 	"github.com/a-novel/bunovel"
 	goframework "github.com/a-novel/go-framework"
+	"github.com/a-novel/permissions-service/migrations"
+	"github.com/a-novel/permissions-service/pkg/dao"
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/require"
 	"github.com/uptrace/bun"
@@ -14,15 +14,15 @@ import (
 	"time"
 )
 
-func TestUsersAuthorizationsRepository_Get(t *testing.T) {
+func TestUsersPermissionsRepository_Get(t *testing.T) {
 	db, sqlDB := bunovel.GetTestPostgres(t, []fs.FS{migrations.Migrations})
 	defer db.Close()
 	defer sqlDB.Close()
 
 	fixtures := []interface{}{
-		&dao.UserAuthorizations{
+		&dao.UserPermissions{
 			Metadata: bunovel.NewMetadata(goframework.NumberUUID(10), baseTime, &updateTime),
-			UserAuthorizationsCore: dao.UserAuthorizationsCore{
+			UserPermissionsCore: dao.UserPermissionsCore{
 				ValidatedAccount: true,
 				AdminAccess:      false,
 			},
@@ -34,13 +34,13 @@ func TestUsersAuthorizationsRepository_Get(t *testing.T) {
 
 		id uuid.UUID
 
-		expect    *dao.UserAuthorizations
+		expect    *dao.UserPermissions
 		expectErr error
 	}{
 		{
 			name:   "Success",
 			id:     goframework.NumberUUID(10),
-			expect: fixtures[0].(*dao.UserAuthorizations),
+			expect: fixtures[0].(*dao.UserPermissions),
 		},
 		{
 			name:      "Error/Notfound",
@@ -50,7 +50,7 @@ func TestUsersAuthorizationsRepository_Get(t *testing.T) {
 	}
 
 	err := bunovel.RunTransactionalTest(db, fixtures, func(ctx context.Context, tx bun.Tx) {
-		repository := dao.NewUserAuthorizationsRepository(tx)
+		repository := dao.NewUserPermissionsRepository(tx)
 
 		for _, d := range data {
 			t.Run(d.name, func(st *testing.T) {
@@ -63,15 +63,15 @@ func TestUsersAuthorizationsRepository_Get(t *testing.T) {
 	require.NoError(t, err)
 }
 
-func TestUsersAuthorizationsRepository_Set(t *testing.T) {
+func TestUsersPermissionsRepository_Set(t *testing.T) {
 	db, sqlDB := bunovel.GetTestPostgres(t, []fs.FS{migrations.Migrations})
 	defer db.Close()
 	defer sqlDB.Close()
 
 	fixtures := []interface{}{
-		&dao.UserAuthorizations{
+		&dao.UserPermissions{
 			Metadata: bunovel.NewMetadata(goframework.NumberUUID(10), baseTime, nil),
-			UserAuthorizationsCore: dao.UserAuthorizationsCore{
+			UserPermissionsCore: dao.UserPermissionsCore{
 				ValidatedAccount: true,
 				AdminAccess:      false,
 			},
@@ -82,25 +82,25 @@ func TestUsersAuthorizationsRepository_Set(t *testing.T) {
 		name string
 
 		id     uuid.UUID
-		core   dao.UserAuthorizationsCore
-		fields dao.AuthorizationFields
+		core   dao.UserPermissionsCore
+		fields dao.PermissionsFields
 		now    time.Time
 
-		expect    *dao.UserAuthorizations
+		expect    *dao.UserPermissions
 		expectErr error
 	}{
 		{
 			name: "Success/Create",
 			id:   goframework.NumberUUID(11),
-			core: dao.UserAuthorizationsCore{
+			core: dao.UserPermissionsCore{
 				ValidatedAccount: false,
 				AdminAccess:      true,
 			},
-			fields: dao.AuthorizationFields{dao.FieldAdminAccess},
+			fields: dao.PermissionsFields{dao.FieldAdminAccess},
 			now:    updateTime,
-			expect: &dao.UserAuthorizations{
+			expect: &dao.UserPermissions{
 				Metadata: bunovel.NewMetadata(goframework.NumberUUID(11), updateTime, nil),
-				UserAuthorizationsCore: dao.UserAuthorizationsCore{
+				UserPermissionsCore: dao.UserPermissionsCore{
 					ValidatedAccount: false,
 					AdminAccess:      true,
 				},
@@ -109,15 +109,15 @@ func TestUsersAuthorizationsRepository_Set(t *testing.T) {
 		{
 			name: "Success/UpdateToTrue",
 			id:   goframework.NumberUUID(10),
-			core: dao.UserAuthorizationsCore{
+			core: dao.UserPermissionsCore{
 				ValidatedAccount: false,
 				AdminAccess:      true,
 			},
-			fields: dao.AuthorizationFields{dao.FieldAdminAccess},
+			fields: dao.PermissionsFields{dao.FieldAdminAccess},
 			now:    updateTime,
-			expect: &dao.UserAuthorizations{
+			expect: &dao.UserPermissions{
 				Metadata: bunovel.NewMetadata(goframework.NumberUUID(10), baseTime, &updateTime),
-				UserAuthorizationsCore: dao.UserAuthorizationsCore{
+				UserPermissionsCore: dao.UserPermissionsCore{
 					ValidatedAccount: true,
 					AdminAccess:      true,
 				},
@@ -126,15 +126,15 @@ func TestUsersAuthorizationsRepository_Set(t *testing.T) {
 		{
 			name: "Success/UpdateToFalse",
 			id:   goframework.NumberUUID(10),
-			core: dao.UserAuthorizationsCore{
+			core: dao.UserPermissionsCore{
 				ValidatedAccount: false,
 				AdminAccess:      true,
 			},
-			fields: dao.AuthorizationFields{dao.FieldValidatedAccount},
+			fields: dao.PermissionsFields{dao.FieldValidatedAccount},
 			now:    updateTime,
-			expect: &dao.UserAuthorizations{
+			expect: &dao.UserPermissions{
 				Metadata: bunovel.NewMetadata(goframework.NumberUUID(10), baseTime, &updateTime),
-				UserAuthorizationsCore: dao.UserAuthorizationsCore{
+				UserPermissionsCore: dao.UserPermissionsCore{
 					ValidatedAccount: false,
 					AdminAccess:      false,
 				},
@@ -145,7 +145,7 @@ func TestUsersAuthorizationsRepository_Set(t *testing.T) {
 	for _, d := range data {
 		t.Run(d.name, func(st *testing.T) {
 			err := bunovel.RunTransactionalTest(db, fixtures, func(ctx context.Context, tx bun.Tx) {
-				repository := dao.NewUserAuthorizationsRepository(tx)
+				repository := dao.NewUserPermissionsRepository(tx)
 
 				res, err := repository.Set(ctx, d.id, d.core, d.fields, d.now)
 				require.ErrorIs(t, err, d.expectErr)
