@@ -3,5 +3,5 @@ package adapters
 import "errors"
 
 var (
-	ErrInvalidAuthorizationField = errors.New("(data) invalid authorization field")
+	ErrInvalidPermissionField = errors.New("(data) invalid permission field")
 )

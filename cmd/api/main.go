@@ -3,13 +3,13 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/a-novel/authorizations-service/config"
-	"github.com/a-novel/authorizations-service/migrations"
-	"github.com/a-novel/authorizations-service/pkg/dao"
-	"github.com/a-novel/authorizations-service/pkg/handlers"
-	"github.com/a-novel/authorizations-service/pkg/services"
 	"github.com/a-novel/bunovel"
 	"github.com/a-novel/go-apis"
+	"github.com/a-novel/permissions-service/config"
+	"github.com/a-novel/permissions-service/migrations"
+	"github.com/a-novel/permissions-service/pkg/dao"
+	"github.com/a-novel/permissions-service/pkg/handlers"
+	"github.com/a-novel/permissions-service/pkg/services"
 	"io/fs"
 )
 
@@ -31,9 +31,9 @@ func main() {
 		_ = sql.Close()
 	}()
 
-	userAuthorizationsDAO := dao.NewUserAuthorizationsRepository(postgres)
+	userPermissionsDAO := dao.NewUserPermissionsRepository(postgres)
 
-	getUserScopesService := services.NewGetUserScopesService(userAuthorizationsDAO, authClient)
+	getUserScopesService := services.NewGetUserScopesService(userPermissionsDAO, authClient)
 
 	getUserScopesHandler := handlers.NewGetUserScopesHandler(getUserScopesService)
 

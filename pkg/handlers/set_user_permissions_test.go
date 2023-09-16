@@ -3,9 +3,9 @@ package handlers_test
 import (
 	"bytes"
 	"encoding/json"
-	"github.com/a-novel/authorizations-service/pkg/handlers"
-	servicesmocks "github.com/a-novel/authorizations-service/pkg/services/mocks"
 	goframework "github.com/a-novel/go-framework"
+	"github.com/a-novel/permissions-service/pkg/handlers"
+	servicesmocks "github.com/a-novel/permissions-service/pkg/services/mocks"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/mock"
@@ -15,7 +15,7 @@ import (
 	"testing"
 )
 
-func TestSetUserAuthorizationsHandler(t *testing.T) {
+func TestSetUserPermissionsHandler(t *testing.T) {
 	data := []struct {
 		name string
 
@@ -60,7 +60,7 @@ func TestSetUserAuthorizationsHandler(t *testing.T) {
 
 	for _, d := range data {
 		t.Run(d.name, func(t *testing.T) {
-			service := servicesmocks.NewSetUserAuthorizationService(t)
+			service := servicesmocks.NewSetUserPermissionsService(t)
 
 			mrshBody, err := json.Marshal(d.body)
 			require.NoError(t, err)
@@ -75,7 +75,7 @@ func TestSetUserAuthorizationsHandler(t *testing.T) {
 					Return(d.serviceErr)
 			}
 
-			handler := handlers.NewSetUserAuthorizationsHandler(service)
+			handler := handlers.NewSetUserPermissionsHandler(service)
 			handler.Handle(c)
 
 			require.Equal(t, d.expectStatus, w.Code, c.Errors.String())

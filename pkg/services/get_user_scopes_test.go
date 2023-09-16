@@ -2,15 +2,15 @@ package services_test
 
 import (
 	"context"
-	"github.com/a-novel/authorizations-service/pkg/adapters"
-	"github.com/a-novel/authorizations-service/pkg/dao"
-	daomocks "github.com/a-novel/authorizations-service/pkg/dao/mocks"
-	"github.com/a-novel/authorizations-service/pkg/models"
-	"github.com/a-novel/authorizations-service/pkg/services"
 	"github.com/a-novel/bunovel"
 	apiclients "github.com/a-novel/go-api-clients"
 	apiclientsmocks "github.com/a-novel/go-api-clients/mocks"
 	goframework "github.com/a-novel/go-framework"
+	"github.com/a-novel/permissions-service/pkg/adapters"
+	"github.com/a-novel/permissions-service/pkg/dao"
+	daomocks "github.com/a-novel/permissions-service/pkg/dao/mocks"
+	"github.com/a-novel/permissions-service/pkg/models"
+	"github.com/a-novel/permissions-service/pkg/services"
 	"github.com/stretchr/testify/require"
 	"testing"
 )
@@ -25,7 +25,7 @@ func TestGetUserScopesService(t *testing.T) {
 		authClientErr  error
 
 		shouldCallDAO bool
-		daoResp       *dao.UserAuthorizations
+		daoResp       *dao.UserPermissions
 		daoErr        error
 
 		expect    models.Scopes
@@ -41,8 +41,8 @@ func TestGetUserScopesService(t *testing.T) {
 				},
 			},
 			shouldCallDAO: true,
-			daoResp: &dao.UserAuthorizations{
-				UserAuthorizationsCore: dao.UserAuthorizationsCore{
+			daoResp: &dao.UserPermissions{
+				UserPermissionsCore: dao.UserPermissionsCore{
 					ValidatedAccount: true,
 				},
 			},
@@ -89,7 +89,7 @@ func TestGetUserScopesService(t *testing.T) {
 
 	for _, d := range data {
 		t.Run(d.name, func(t *testing.T) {
-			repository := daomocks.NewUserAuthorizationsRepository(t)
+			repository := daomocks.NewUserPermissionsRepository(t)
 			authClient := apiclientsmocks.NewAuthClient(t)
 
 			authClient.On("IntrospectToken", context.Background(), d.tokenRaw).Return(d.authClientResp, d.authClientErr)

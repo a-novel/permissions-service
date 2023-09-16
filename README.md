@@ -1,6 +1,6 @@
-# Authorizations service
+# Permissions service
 
-Manage users authorizations.
+Manage users permissions.
 
 ## Prerequisites
 
@@ -17,8 +17,8 @@ Create a env file.
 touch .envrc
 ```
 ```bash
-printf 'export POSTGRES_URL="postgres://authorizations@localhost:5432/agora_authorizations?sslmode=disable"
-export POSTGRES_URL_TEST="postgres://test@localhost:5432/agora_authorizations_test?sslmode=disable"
+printf 'export POSTGRES_URL="postgres://permissions@localhost:5432/agora_permissions?sslmode=disable"
+export POSTGRES_URL_TEST="postgres://test@localhost:5432/agora_permissions_test?sslmode=disable"
 ' > .envrc
 ```
 ```bash

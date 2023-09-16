@@ -1,1 +1,1 @@
-DROP TABLE IF EXISTS users_authorizations;
+DROP TABLE IF EXISTS users_permissions;

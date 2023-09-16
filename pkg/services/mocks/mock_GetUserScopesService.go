@@ -5,7 +5,7 @@ package servicesmocks
 import (
 	context "context"
 
-	models "github.com/a-novel/authorizations-service/pkg/models"
+	models "github.com/a-novel/permissions-service/pkg/models"
 	mock "github.com/stretchr/testify/mock"
 )
 

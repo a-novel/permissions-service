@@ -120,7 +120,7 @@ jobs:
         uses: google-github-actions/deploy-cloudrun@v1
         with:
           secrets: |
-            POSTGRES_URL=agora-authorizations-service-postgres:latest
+            POSTGRES_URL=agora-permissions-service-postgres:latest
             AUTH_API=agora-ip-auth-service-internal:latest
           env_vars: |
             ENV=prod
@@ -167,7 +167,7 @@ jobs:
         uses: google-github-actions/deploy-cloudrun@v1
         with:
           secrets: |
-            POSTGRES_URL=agora-authorizations-service-postgres:latest
+            POSTGRES_URL=agora-permissions-service-postgres:latest
           env_vars: |
             ENV=prod
             PROJECT_ID=${{ vars.PROJECT_ID }}

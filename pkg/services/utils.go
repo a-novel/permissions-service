@@ -7,6 +7,6 @@ var (
 
 	ErrIntrospectToken = errors.New("(dep) failed to introspect token")
 
-	ErrSetUserAuthorizations = errors.New("(dao) failed to set user authorizations")
-	ErrGetUserAuthorizations = errors.New("(dao) failed to get user authorizations")
+	ErrSetUserPermissions = errors.New("(dao) failed to set user permissions")
+	ErrGetUserPermissions = errors.New("(dao) failed to get user permissions")
 )

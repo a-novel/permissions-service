@@ -1,9 +1,9 @@
 package handlers
 
 import (
-	"github.com/a-novel/authorizations-service/pkg/services"
 	"github.com/a-novel/go-apis"
 	goframework "github.com/a-novel/go-framework"
+	"github.com/a-novel/permissions-service/pkg/services"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
