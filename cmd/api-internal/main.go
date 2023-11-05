@@ -49,7 +49,7 @@ func main() {
 		},
 	})
 
-	router.POST("/user", setUserPermissionsHandler.Handle)
+	router.POST("/user/permissions", setUserPermissionsHandler.Handle)
 	router.GET("/user/scopes", hasUserScopeHandler.Handle)
 
 	if err := router.Run(fmt.Sprintf(":%d", config.API.PortInternal)); err != nil {
